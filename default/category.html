@@ -1,0 +1,82 @@
+{% extends base %}
+
+{% block page %}
+<div class="panel panel-default">
+    <div class="panel-body">
+
+        <div class="row">
+            {% if modules|length > 0 %}
+            <div class="col-md-9">
+                {% else %}
+                <div class="col-md-12">
+                    {% endif %}
+                    <div class="row">
+                        {% for package in packages %}
+                        <div class="col-lg-4 col-md-4 col-xs-6">
+                            <div class="panel panel-default item-wrapper">
+                                <div class="panel-body">
+                                    {% if package.picture != null %}
+                                    <img class="img-responsive" src="{{ package.picture }}"><br/>
+                                    {% endif %}
+                                    <div class="item-footer">
+                                        <div class="row">
+                                            <div class="col-md-6"><b>{{ package.name }}</b><br>
+                                                {{ package.price|number_format(2, '.', ',') }} {{ store.currency }}
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                <button type="button" class="btn btn-primary btn-xs"
+                                                        data-toggle="modal"
+                                                        data-target="#package{{ package.id }}">
+                                                    {{ language.more_info }}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="package{{ package.id }}" tabindex="-1" role="dialog"
+                             aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                        <h4 class="modal-title">{{ package.name }}</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>{{ package.description | raw }}</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">{{ language.close }}
+                                        </button>
+                                        <a href="/package/{{ package.id }}">
+                                            <button type="button"
+                                                    class="btn btn-primary">{{ language.buy_now }}</button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                {% if modules|length > 0 %}
+                <div class="col-md-3">
+                    {% for module in modules %}
+                    {% if module.type == "recentPayments" %}
+                    {% include module.payments with {'module': module} %}
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}

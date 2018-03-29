@@ -1,0 +1,25 @@
+{% extends base %}
+
+{% block page %}
+<div class="panel panel-default">
+    <div class="panel-body">
+
+        {% if modules|length > 0 %}
+        <div class="col-md-9">
+            {{ page.content | raw }}
+        </div>
+
+        <div class="col-md-3">
+            {% for module in modules %}
+            {% if module.type == "recentPayments" %}
+            {% include module.payments with {'module': module} %}
+            {% endif %}
+            {% endfor %}
+        </div>
+
+        {% else %}
+        {{ page.content | raw }}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
