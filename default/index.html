@@ -18,6 +18,14 @@
             {% if module.type == "topDonator" %}
             {% include module.topdonator with {'module': module} %}
             {% endif %}
+
+            {% if module.type == "ownText" %}
+            {% include module.owntext with {'module': module} %}
+            {% endif %}
+
+            {% if module.type == "donationGoal" %}
+            {% include module.donationgoal with {'module': module} %}
+            {% endif %}
             {% endfor %}
         </div>
 

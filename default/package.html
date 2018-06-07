@@ -6,29 +6,24 @@
         <div class="row">
             <div class="col-md-7">
                 <b>Name:</b> {{ package.name }}<br>
-                <b>Price:</b> {{ package.price|number_format(2, '.', ',') }} {{ store.currency }}
+                <b>Price:</b> {% if sale is empty %} {{ package.price|number_format(2, '.', ',') }} {{ store.currency }} {% else %} <strike>{{ package.price|number_format(2, '.', ',') }}</strike> {{ (package.price -((package.price / 100) * sale.amount))|number_format(2, '.', ',') }} {% endif %}
                 <hr>
                 {{ package.description | raw }}
             </div>
             <div class="col-md-5">
                 <form method="POST" action="/checkout/{{ package.id }}" accept-charset="UTF-8">
                     <div class="col-md-12">
+                        {% if mcName == null %}
                         <input name="mc_name" placeholder="{{ language.minecraft_name_placeholder }}" class="form-control" type="text">
+                        {% else %}
+                        <input title="{{ mcName }}" value="{{ mcName }}" class="form-control" type="text" disabled>
+                        <a href="/checkout/basket/forget">{{ language.change_minecraft_name }}</a>
+                        {% endif %}
                     </div>
                     {% if package.own_price %}
                     <div class="col-md-12">
                         <br><input type="text" name="price" placeholder="{{ language.ownPrice }}"
                                    class="form-control" required="">
-                    </div>
-                    {% endif %}
-                    {% if store.enable_discount %}
-                    <div class="col-md-12">
-                        <br><input type="text" name="coupon" placeholder="{{ language.coupon_placeholder }}" class="form-control">
-                    </div>
-                    {% endif %}
-                    {% if store.enable_discount %}
-                    <div class="col-md-12">
-                        <br><input type="text" name="giftcard" placeholder="{{ language.giftcard_placeholder }}" class="form-control">
                     </div>
                     {% endif %}
 
@@ -43,15 +38,13 @@
 
                     {% endif %}
 
+
                     <div class="col-md-12">
                         <br>
-                        <button type="submit" name="type" value="checkout" class="btn btn-primary btn-block"><i
-                                class="fa fa-shopping-cart"></i> {{ language.checkout }}
+                        <button type="submit" name="type" value="checkout" class="btn btn-primary btn-block"><i  class="fa fa-shopping-cart"></i> {{ language.add_to_card }}
                         </button>
                     </div>
-                    <div class="col-md-12">
-                        <input name="tos" type="checkbox" required> {{ language.agree }} <a href="/terms" target="_blank">{{ language.terms_of_service }}</a>
-                    </div>
+
                 </form>
             </div>
         </div>

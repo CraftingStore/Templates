@@ -1,0 +1,156 @@
+{% extends base %}
+
+{% block page %}
+<div class="panel panel-default">
+    <div class="panel-body">
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <table class="table table-responsive table-striped">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th class="text-right">Options</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for basketItem in basketItems %}
+                    <tr>
+                        <td>{{ basketItem.name }}</td>
+                        <td>
+                            {% if basketItem.price == basketItem.originalPrice %}
+                            {{ basketItem.price|number_format(2, '.', ',') }}
+                            {% else %}
+                            <del>{{ basketItem.originalPrice|number_format(2, '.', ',') }}</del> {{ basketItem.price|number_format(2, '.', ',') }}
+                            {% endif %}
+
+                            {{  store.currency }}
+                        </td>
+                        <td class="text-right">
+                            <a href="/checkout/basket/remove/{{  basketItem.identifier }}" class="btn btn-xs btn-danger">Remove</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                <hr>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        {% if couponCode != null %}
+                        Coupon: <b>{{ couponCode }} <a href="/checkout/coupons/clear">X</a></b>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-6">
+                        <p class="text-right">Price: <b>{{ totalPrice|number_format(2, '.', ',') }}</b> {{ store.currency }}</p>
+                    </div>
+                </div>
+
+                <hr>
+
+                {% if store.enable_discount %}
+                <form method="post" action="/checkout/coupons/add">
+                    <div class="input-group">
+                        <input type="text" name="coupon" placeholder="Have a coupon code? Enter it here and click redeem." class="form-control">
+                        <div class="input-group-btn"><button class="btn btn-primary">Redeem <i class="fa fa-arrow-right"></i></button></div>
+                    </div>
+                </form>
+                {% endif %}
+
+                <hr>
+            </div>
+        </div>
+
+        <form method="POST" action="/checkout/basket/payment" accept-charset="UTF-8">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="col-md-12">
+                        {% if mcName == null %}
+                        <input name="mc_name" placeholder="{{ language.minecraft_name_placeholder }}" class="form-control" type="text" required>
+                        {% else %}
+                        <input title="{{ mcName }}" value="{{ mcName }}" class="form-control" type="text" disabled>
+                        <a href="/checkout/basket/forget">{{ language.change_minecraft_name }}</a>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-12">
+                        <br/><input name="email" placeholder="{{ language.email }}" class="form-control" type="text" required>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+
+                    <div class="gateways">
+
+                        {% if totalPrice > 0 %}
+
+                        {% if store.enable_paypal %}
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="gateway" id="gateway" value="paypal" required>
+                                <span class="btn btn-info btn-block">{{ language.paypal }}</span>
+                            </label>
+                        </div>
+                        {% endif %}
+
+                        {% if store.enable_paygol %}
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="gateway" id="gateway" value="paygol" required>
+                                <span class="btn btn-danger btn-block">{{ language.paygol }}</span>
+                            </label>
+                        </div>
+                        {% endif %}
+
+                        {% if store.enable_paymentwall %}
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="gateway" id="gateway" value="paymentwall" required>
+                                <span class="btn btn-warning btn-block">{{ language.paymentwall }}</span>
+                            </label>
+                        </div>
+                        {% endif %}
+
+                        {% if store.enable_xsolla %}
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="gateway" id="gateway" value="xsolla" required>
+                                <span class="btn btn-primary btn-block">{{ language.xsolla }}</span>
+                            </label>
+                        </div>
+                        {% endif %}
+                        {% else %}
+                        {% if basketItems|length > 0 %}
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="gateway" id="gateway" value="free" required>
+                                <span class="btn btn-warning btn-block">{{ language.free }}</span>
+                            </label>
+                        </div>
+                        {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <hr>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <input name="tos" type="checkbox" required> {{ language.agree }} <a href="/terms" target="_blank">{{ language.terms_of_service }}</a>
+                </div>
+                <div class="col-md-6 text-right">
+                    <button type="submit" class="btn btn-primary">{{ language.checkout }}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

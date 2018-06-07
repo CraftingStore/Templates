@@ -21,7 +21,7 @@
                                     <div class="item-footer">
                                         <div class="row">
                                             <div class="col-md-6"><b>{{ package.name }}</b><br>
-                                                {{ package.price|number_format(2, '.', ',') }} {{ store.currency }}
+                                                {% if sale is empty %} {{ package.price|number_format(2, '.', ',') }} {% else %} <strike>{{ package.price|number_format(2, '.', ',') }}</strike> {{ (package.price -((package.price / 100) * sale.amount))|number_format(2, '.', ',') }} {% endif %} {{ store.currency }}
                                             </div>
                                             <div class="col-md-6 text-right">
                                                 <button type="button" class="btn btn-primary btn-xs"
@@ -74,6 +74,14 @@
 
                     {% if module.type == "topDonator" %}
                     {% include module.topdonator with {'module': module} %}
+                    {% endif %}
+
+                    {% if module.type == "ownText" %}
+                    {% include module.owntext with {'module': module} %}
+                    {% endif %}
+
+                    {% if module.type == "donationGoal" %}
+                    {% include module.donationgoal with {'module': module} %}
                     {% endif %}
                     {% endfor %}
                 </div>
