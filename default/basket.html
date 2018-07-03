@@ -12,6 +12,8 @@
                     <tr>
                         <th>Name</th>
                         <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Sub total</th>
                         <th class="text-right">Options</th>
                     </tr>
                     </thead>
@@ -27,6 +29,10 @@
                             {% endif %}
 
                             {{  store.currency }}
+                        </td>
+                        <td>{{ basketItem.quantity}}</td>
+                        <td>
+                            {{ (basketItem.price*basketItem.quantity)|number_format(2, '.', ',') }} {{  store.currency }}
                         </td>
                         <td class="text-right">
                             <a href="/checkout/basket/remove/{{  basketItem.identifier }}" class="btn btn-xs btn-danger">Remove</a>
