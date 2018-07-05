@@ -21,7 +21,9 @@
                                     <div class="item-footer">
                                         <div class="row">
                                             <div class="col-md-6"><b>{{ package.name }}</b><br>
-                                                {% if sale is empty %} {{ package.price|number_format(2, '.', ',') }} {% else %} <strike>{{ package.price|number_format(2, '.', ',') }}</strike> {{ (package.price -((package.price / 100) * sale.amount))|number_format(2, '.', ',') }} {% endif %} {{ store.currency }}
+                                                {% if cumulativeDiscount > 0 and package.price - cumulativeDiscount <= 0 %} {{ package.price|number_format(2, '.', ',') }} {% elseif cumulativeDiscount > 0 %} <strike>{{ package.price|number_format(2, '.', ',') }}</strike> {{ (package.price - cumulativeDiscount)|number_format(2, '.', ',') }}
+                                                {% elseif sale is empty %} {{ package.price|number_format(2, '.', ',') }}
+                                                {% else %} <strike>{{ package.price|number_format(2, '.', ',') }}</strike> {{ (package.price -((package.price / 100) * sale.amount))|number_format(2, '.', ',') }} {% endif %} {{ store.currency }}
                                             </div>
                                             <div class="col-md-6 text-right">
                                                 <button type="button" class="btn btn-primary btn-xs"
@@ -53,10 +55,12 @@
                                         <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">{{ language.close }}
                                         </button>
+                                        {% if package.price - cumulativeDiscount > 0 %}
                                         <a href="/package/{{ package.id }}">
                                             <button type="button"
                                                     class="btn btn-primary">{{ language.buy_now }}</button>
                                         </a>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
