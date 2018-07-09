@@ -55,7 +55,14 @@
                                         <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">{{ language.close }}
                                         </button>
-                                        {% if package.price - cumulativeDiscount > 0 %}
+                                        {% if category.cumulativeCategory %}
+                                        {% if package.price - cumulativeDiscount > 0  %}
+                                        <a href="/package/{{ package.id }}">
+                                            <button type="button"
+                                                    class="btn btn-primary">{{ language.buy_now }}</button>
+                                        </a>
+                                        {% endif %}
+                                        {% else %}
                                         <a href="/package/{{ package.id }}">
                                             <button type="button"
                                                     class="btn btn-primary">{{ language.buy_now }}</button>
