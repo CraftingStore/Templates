@@ -10,6 +10,16 @@
                 {% else %}
                 <div class="col-md-12">
                     {% endif %}
+
+                    {% if category.description is defined %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{ category.description | raw }}
+                            <hr>
+                        </div>
+                    </div>
+                    {% endif %}
+
                     <div class="row">
                         {% for package in packages %}
                         <div class="col-lg-4 col-md-4 col-xs-6">
