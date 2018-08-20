@@ -31,9 +31,13 @@
                                     <div class="item-footer">
                                         <div class="row">
                                             <div class="col-md-6"><b>{{ package.name }}</b><br>
-                                                {% if cumulativeDiscount > 0 and package.price - cumulativeDiscount <= 0 %} {{ package.price|number_format(2, '.', ',') }} {% elseif cumulativeDiscount > 0 %} <strike>{{ package.price|number_format(2, '.', ',') }}</strike> {{ (package.price - cumulativeDiscount)|number_format(2, '.', ',') }}
+                                                {% if cumulativeDiscount > 0 and package.price - cumulativeDiscount <= 0 %} {{ package.price|number_format(2, '.', ',') }} {% elseif cumulativeDiscount > 0 %}
+                                                <strike>{{ package.price|number_format(2, '.', ',') }}</strike> {{ (package.price - cumulativeDiscount)|number_format(2, '.', ',') }}
+                                                {% elseif package.discountAmount is defined and package.discountAmount > 0 %}
+                                                <strike>{{ package.price|number_format(2, '.', ',') }}</strike> {{ (package.price - package.discountAmount)|number_format(2, '.', ',') }}
                                                 {% elseif sale is empty %} {{ package.price|number_format(2, '.', ',') }}
-                                                {% else %} <strike>{{ package.price|number_format(2, '.', ',') }}</strike> {{ (package.price -((package.price / 100) * sale.amount))|number_format(2, '.', ',') }} {% endif %} {{ store.currency }}
+                                                {% else %}
+                                                <strike>{{ package.price|number_format(2, '.', ',') }}</strike> {{ (package.price -((package.price / 100) * sale.amount))|number_format(2, '.', ',') }} {% endif %} {{ store.currency }}
                                             </div>
                                             <div class="col-md-6 text-right">
                                                 <button type="button" class="btn btn-primary btn-xs"

@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-7">
                 <b>Name:</b> {{ package.name }}<br>
-                <b>Price:</b>{% if cumulativeDiscount > 0 %} <strike>{{ package.price|number_format(2, '.', ',') }}</strike> {{ (package.price - cumulativeDiscount)|number_format(2, '.', ',') }}  {% elseif sale is empty %} {{ package.price|number_format(2, '.', ',') }} {{ store.currency }} {% else %} <strike>{{ package.price|number_format(2, '.', ',') }}</strike> {{ (package.price -((package.price / 100) * sale.amount))|number_format(2, '.', ',') }} {% endif %}
+                <b>Price:</b>{% if cumulativeDiscount > 0 and package.price - cumulativeDiscount <= 0 %} {{ package.price|number_format(2, '.', ',') }} {% elseif cumulativeDiscount > 0 %} <strike>{{ package.price|number_format(2, '.', ',') }}</strike> {{ (package.price - cumulativeDiscount)|number_format(2, '.', ',') }} {% elseif package.discountAmount is defined and package.discountAmount > 0 %} <strike>{{ package.price|number_format(2, '.', ',') }}</strike> {{ (package.price - package.discountAmount)|number_format(2, '.', ',') }} {% elseif sale is empty %} {{ package.price|number_format(2, '.', ',') }} {% else %} <strike>{{ package.price|number_format(2, '.', ',') }}</strike> {{ (package.price -((package.price / 100) * sale.amount))|number_format(2, '.', ',') }} {% endif %}
                 <hr>
                 {{ package.description | raw }}
             </div>
