@@ -20,6 +20,34 @@
                     </div>
                     {% endif %}
 
+                    {% if category.viewMode is defined and category.viewMode == 1 %}
+
+                    <table class="table table-hover table-striped">
+                        <tbody>
+                        {% for package in packages %}
+                        <tr>
+                            <td class="name">{{ package.name }}</td>
+                            <td class="price">
+                                {% if cumulativeDiscount > 0 and package.price - cumulativeDiscount <= 0 %} {{ package.price|number_format(2, '.', ',') }} {% elseif cumulativeDiscount > 0 %}
+                                <strike>{{ package.price|number_format(2, '.', ',') }}</strike> {{ (package.price - cumulativeDiscount)|number_format(2, '.', ',') }}
+                                {% elseif package.discountAmount is defined and package.discountAmount > 0 %}
+                                <strike>{{ package.price|number_format(2, '.', ',') }}</strike> {{ (package.price - package.discountAmount)|number_format(2, '.', ',') }}
+                                {% elseif sale is empty %} {{ package.price|number_format(2, '.', ',') }}
+                                {% else %}
+                                <strike>{{ package.price|number_format(2, '.', ',') }}</strike> {{ (package.price -((package.price / 100) * sale.amount))|number_format(2, '.', ',') }} {% endif %}  <small>{{ store.currency }}</small>
+                            </td>
+                            <td class="pull-right">
+                                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#package{{ package.id }}">
+                                    {{ language.more_info }}
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                    {% else %}
+
                     <div class="row">
                         {% for package in packages %}
                         <div class="col-lg-4 col-md-4 col-xs-6">
@@ -40,9 +68,7 @@
                                                 <strike>{{ package.price|number_format(2, '.', ',') }}</strike> {{ (package.price -((package.price / 100) * sale.amount))|number_format(2, '.', ',') }} {% endif %} {{ store.currency }}
                                             </div>
                                             <div class="col-md-6 text-right">
-                                                <button type="button" class="btn btn-primary btn-xs"
-                                                        data-toggle="modal"
-                                                        data-target="#package{{ package.id }}">
+                                                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#package{{ package.id }}">
                                                     {{ language.more_info }}
                                                 </button>
                                             </div>
@@ -51,44 +77,48 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="modal fade" id="package{{ package.id }}" tabindex="-1" role="dialog"
-                             aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                        <h4 class="modal-title">{{ package.name }}</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>{{ package.description | raw }}</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">{{ language.close }}
-                                        </button>
-                                        {% if category.cumulativeCategory %}
-                                        {% if package.price - cumulativeDiscount > 0  %}
-                                        <a href="/package/{{ package.id }}">
-                                            <button type="button"
-                                                    class="btn btn-primary">{{ language.buy_now }}</button>
-                                        </a>
-                                        {% endif %}
-                                        {% else %}
-                                        <a href="/package/{{ package.id }}">
-                                            <button type="button"
-                                                    class="btn btn-primary">{{ language.buy_now }}</button>
-                                        </a>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         {% endfor %}
                     </div>
+
+                    {% endif %}
                 </div>
+
+                {% for package in packages %}
+                <div class="modal fade" id="package{{ package.id }}" tabindex="-1" role="dialog"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <h4 class="modal-title">{{ package.name }}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>{{ package.description | raw }}</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                        data-dismiss="modal">{{ language.close }}
+                                </button>
+                                {% if category.cumulativeCategory %}
+                                {% if package.price - cumulativeDiscount > 0 %}
+                                <a href="/package/{{ package.id }}">
+                                    <button type="button"
+                                            class="btn btn-primary">{{ language.buy_now }}</button>
+                                </a>
+                                {% endif %}
+                                {% else %}
+                                <a href="/package/{{ package.id }}">
+                                    <button type="button"
+                                            class="btn btn-primary">{{ language.buy_now }}</button>
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
 
                 {% if modules|length > 0 %}
                 <div class="col-md-3">
