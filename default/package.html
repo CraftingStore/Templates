@@ -6,7 +6,12 @@
         <div class="row">
             <div class="col-md-7">
                 <b>Name:</b> {{ package.name }}<br>
-                <b>Price:</b>{% if cumulativeDiscount > 0 and package.price - cumulativeDiscount <= 0 %} {{ package.price|number_format(2, '.', ',') }} {% elseif cumulativeDiscount > 0 %} <strike>{{ package.price|number_format(2, '.', ',') }}</strike> {{ (package.price - cumulativeDiscount)|number_format(2, '.', ',') }} {% elseif package.discountAmount is defined and package.discountAmount > 0 %} <strike>{{ package.price|number_format(2, '.', ',') }}</strike> {{ (package.price - package.discountAmount)|number_format(2, '.', ',') }} {% elseif sale is empty %} {{ package.price|number_format(2, '.', ',') }} {% else %} <strike>{{ package.price|number_format(2, '.', ',') }}</strike> {{ (package.price -((package.price / 100) * sale.amount))|number_format(2, '.', ',') }} {% endif %}
+                <b>Price:</b>
+                {% if package.priceCalculatedOriginal == package.priceCalculatedDiscounted %}
+                {{ package.priceCalculatedOriginal|number_format(2, '.', ',') }}
+                {% else %}
+                <del>{{ package.priceCalculatedOriginal|number_format(2, '.', ',') }}</del> {{ package.priceCalculatedDiscounted|number_format(2, '.', ',') }}
+                {% endif %} {{ currency }}
                 <hr>
                 {{ package.description | raw }}
             </div>
@@ -14,9 +19,11 @@
                 <form method="POST" action="/checkout/{{ package.id }}" accept-charset="UTF-8">
                     <div class="col-md-12">
                         {% if mcName == null %}
-                        <input name="mc_name" placeholder="{{ language.minecraft_name_placeholder }}" class="form-control" type="text">
+                        <input name="mc_name" placeholder="{{ language.minecraft_name_placeholder }}"
+                               class="form-control" type="text">
                         {% else %}
-                        <input title="{{ mcName }}" value="{{ mcName }}" class="form-control" type="text" disabled>
+                        <input title="{{ mcName }}" value="{{ mcName }}" class="form-control" type="text"
+                               disabled>
                         <a href="/checkout/basket/forget">{{ language.change_minecraft_name }}</a>
                         {% endif %}
                     </div>
@@ -32,19 +39,19 @@
                     {% for variable in package.variables %}
                     <div class="col-md-12"><br/>
                         <b>{{ variable.name }}</b>
-                        <br><input type="text" name="variables[{{ variable.identifier }}]" placeholder="{{ variable.help_text }}" class="form-control" required>
+                        <br><input type="text" name="variables[{{ variable.identifier }}]"
+                                   placeholder="{{ variable.help_text }}" class="form-control" required>
                     </div>
                     {% endfor %}
 
                     {% endif %}
 
-
                     <div class="col-md-12">
                         <br>
-                        <button type="submit" name="type" value="checkout" class="btn btn-primary btn-block"><i  class="fa fa-shopping-cart"></i> {{ language.add_to_card }}
+                        <button type="submit" name="type" value="checkout" class="btn btn-primary btn-block"><i
+                                class="fa fa-shopping-cart"></i> {{ language.add_to_card }}
                         </button>
                     </div>
-
                 </form>
             </div>
         </div>

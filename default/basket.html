@@ -30,7 +30,17 @@
 
                             {{  store.currency }}
                         </td>
-                        <td>{{ basketItem.quantity}}</td>
+                        <td class="quantity">
+                            <form method="post" action="/checkout/basket/quantity">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <input type="text" name="quantity" min="1" max="100" value="{{ basketItem.quantity}}">
+                                        <input type="hidden" name="packageId" value="{{ basketItem.identifier }}">
+                                        <button class="btn btn-xs btn-default btn-quantity">Update</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </td>
                         <td>
                             {{ (basketItem.price*basketItem.quantity)|number_format(2, '.', ',') }} {{  store.currency }}
                         </td>
@@ -130,6 +140,16 @@
                             </label>
                         </div>
                         {% endif %}
+
+                        {% if store.enable_stripe %}
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="gateway" id="gateway" value="stripe" required>
+                                <span class="btn btn-info btn-block">{{ language.stripe }}</span>
+                            </label>
+                        </div>
+                        {% endif %}
+
                         {% else %}
                         {% if basketItems|length > 0 %}
                         <div class="radio">
@@ -149,10 +169,15 @@
             </div>
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <input name="tos" type="checkbox" required> {{ language.agree }} <a href="/terms" target="_blank">{{ language.terms_of_service }}</a>
                 </div>
-                <div class="col-md-6 text-right">
+                <div class="col-md-12">
+                    <hr>
+                    <input name="tos_cs" type="checkbox" required> I agree with the <a href="https://www.craftingstore.net/terms" target="_blank">CraftingStore Terms Of Service</a> and allow CraftingStore to process my data in this way, and herby confirm that I'm over the age of 18, or have permission from my guardian.
+                </div>
+                <div class="col-md-12 text-right">
+                    <hr>
                     <button type="submit" class="btn btn-primary">{{ language.checkout }}</button>
                 </div>
             </div>
