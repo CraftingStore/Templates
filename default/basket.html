@@ -150,6 +150,15 @@
                         </div>
                         {% endif %}
 
+                        {% if store.enable_mollie is defined and store.enable_mollie %}
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="gateway" id="gateway" value="mollie" required>
+                                <span class="btn btn-danger btn-block">Mollie</span>
+                            </label>
+                        </div>
+                        {% endif %}
+
                         {% else %}
                         {% if basketItems|length > 0 %}
                         <div class="radio">

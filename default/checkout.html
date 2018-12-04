@@ -52,6 +52,15 @@
                     </div>
                     {% endif %}
 
+                    {% if store.enable_mollie is defined and store.enable_mollie %}
+                    <div class="col-md-12">
+                        <br>
+                        <button type="submit" name="type" value="mollie"
+                                class="btn btn-danger btn-block">{{ language.mollie }}
+                        </button>
+                    </div>
+                    {% endif %}
+
                     {% else %}
                     <div class="col-md-12">
                         <br>
