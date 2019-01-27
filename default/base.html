@@ -11,9 +11,19 @@
     <title>{{ store.name }} | {{ page_name }}</title>
 
     <link rel="stylesheet" href="https://cdn.cloudprotected.net/craftingstore/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.cloudprotected.net/craftingstore/assets/css/themes/{{ store.theme }}.min.css">
+    <link rel="stylesheet"
+          href="https://cdn.cloudprotected.net/craftingstore/assets/css/themes/{{ store.theme }}.min.css">
     <link rel="stylesheet" href="https://cdn.cloudprotected.net/craftingstore/assets/css/store.min.css">
     <link rel="stylesheet" href="/assets/{{ store.assets_hash }}/style.css?v={{ store.updatedAt }}">
+    {% if store.advertisements is defined and store.advertisements %}
+    <script async data-no-instant src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script data-no-instant>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-3641858155756746",
+            enable_page_level_ads: true
+        });
+    </script>
+    {% endif %}
 </head>
 
 <body {% if store.background_url !=null %}style="background-image: url('{{ store.background_url }}')" {% endif %}>

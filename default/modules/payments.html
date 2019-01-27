@@ -5,10 +5,12 @@
             {% for payment in module.data %}
             <div class="col-md-12">
                 <div class="text-center">
-                    <img src="https://crafatar.com/avatars/{{ payment.uuid }}/?size=100&overlay=true" class="img-circle"><br>
+                    <img src="https://crafatar.com/avatars/{{ payment.uuid }}/?size=100&overlay=true"
+                         class="img-circle"><br>
                     <b>{{ payment.mc_name }}</b><br>
                     {{ payment.package_name }}
-                </div><br/><br/>
+                </div>
+                <br/><br/>
             </div>
             {% endfor %}
         </div>

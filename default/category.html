@@ -1,4 +1,4 @@
-{% extends base %}
+{% extends "default.views.templates.base" %}
 
 {% block page %}
 <div class="panel panel-default">
@@ -32,8 +32,7 @@
                             <small>{{ store.currency }}</small>
                         </td>
                         <td class="pull-right">
-                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal"
-                                    data-target="#package{{ package.id }}">
+                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#package{{ package.id }}">
                                 {{ language.more_info }}
                             </button>
                         </td>
@@ -145,5 +144,4 @@
     </div>
 </div>
 {% endfor %}
-
 {% endblock %}

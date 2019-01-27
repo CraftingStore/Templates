@@ -6,10 +6,11 @@
             {{ dump(payment, item) }}
             <div class="col-md-12">
                 <div class="text-center">
-                    <img src="https://crafatar.com/avatars/{{ payment.uuid }}/?size=100" class="img-circle"><br>
+                    <img src="https://cravatar.eu/helmavatar/{{ payment.uuid }}/100.png" class="img-circle"><br>
                     <b>{{ payment.mc_name }}</b><br>
                     {{ payment.package_name }}
-                </div><br/><br/>
+                </div>
+                <br/><br/>
             </div>
             {% endfor %}
         </div>

@@ -5,8 +5,8 @@
     <div class="panel-body">
         <div class="row">
             <div class="col-md-7">
-                <b>Name:</b> {{ package.name }}<br>
-                <b>Price:</b> {{ package.new_price|number_format(2, '.', ',') }} {% if package.price !=
+                <b>{{ language.name }}:</b> {{ package.name }}<br>
+                <b>{{ language.price }}:</b> {{ package.new_price|number_format(2, '.', ',') }} {% if package.price !=
                 package.new_price %}
                 <s>{{ package.price|number_format(2, '.', ',') }}</s>{% endif %} {{ store.currency }}
                 <hr>
