@@ -7,10 +7,12 @@
                     {% if module.data.showInPercentage %}
                     <p>{{ module.data.percentage }}%</p>
                     {% else %}
-                    <p>{{ module.data.amountSpend }} / {{  module.data.amountMax}}  {{ store.currency }} ({{ module.data.percentage }}%)</p>
+                    <p>{{ module.data.amountSpend }} / {{ module.data.amountMax}} {{ store.currency }} ({{
+                        module.data.percentage }}%)</p>
                     {% endif %}
                     <div class="progress  progress-striped  ">
-                        <div class="progress-bar {% if module.data.barAnimate %} active {% endif %}" role="progressbar" style="width:{{ module.data.percentage }}%;"></div>
+                        <div class="progress-bar {% if module.data.barAnimate %} active {% endif %}" role="progressbar"
+                             style="width:{{ module.data.percentage }}%;"></div>
                     </div>
                 </div>
             </div>

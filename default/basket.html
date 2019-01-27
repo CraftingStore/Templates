@@ -10,11 +10,11 @@
                 <table class="table table-responsive table-striped">
                     <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Sub total</th>
-                        <th class="text-right">Options</th>
+                        <th>{{ language.name }}</th>
+                        <th>{{ language.price }}</th>
+                        <th>{{ language.quantity }}</th>
+                        <th>{{ language.subTotal }}</th>
+                        <th class="text-right">{{ language.options }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -25,27 +25,31 @@
                             {% if basketItem.price == basketItem.originalPrice %}
                             {{ basketItem.price|number_format(2, '.', ',') }}
                             {% else %}
-                            <del>{{ basketItem.originalPrice|number_format(2, '.', ',') }}</del> {{ basketItem.price|number_format(2, '.', ',') }}
+                            <del>{{ basketItem.originalPrice|number_format(2, '.', ',') }}</del>
+                            {{ basketItem.price|number_format(2, '.', ',') }}
                             {% endif %}
 
-                            {{  store.currency }}
+                            {{ store.currency }}
                         </td>
                         <td class="quantity">
                             <form method="post" action="/checkout/basket/quantity">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <input type="text" name="quantity" min="1" max="100" value="{{ basketItem.quantity}}">
+                                        <input type="text" name="quantity" min="1" max="100"
+                                               value="{{ basketItem.quantity}}">
                                         <input type="hidden" name="packageId" value="{{ basketItem.identifier }}">
-                                        <button class="btn btn-xs btn-default btn-quantity">Update</button>
+                                        <button class="btn btn-xs btn-default btn-quantity">{{ language.update }}
+                                        </button>
                                     </div>
                                 </div>
                             </form>
                         </td>
                         <td>
-                            {{ (basketItem.price*basketItem.quantity)|number_format(2, '.', ',') }} {{  store.currency }}
+                            {{ (basketItem.price*basketItem.quantity)|number_format(2, '.', ',') }} {{ store.currency }}
                         </td>
                         <td class="text-right">
-                            <a href="/checkout/basket/remove/{{  basketItem.identifier }}" class="btn btn-xs btn-danger">Remove</a>
+                            <a href="/checkout/basket/remove/{{  basketItem.identifier }}"
+                               class="btn btn-xs btn-danger">{{ language.remove }}</a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -57,12 +61,13 @@
                 <div class="row">
                     <div class="col-md-6">
                         {% if couponCode != null %}
-                        Coupon: <b>{{ couponCode }} <a href="/checkout/coupons/clear">X</a></b>
+                        {{ language.coupon }}: <b>{{ couponCode }} <a href="/checkout/coupons/clear">X</a></b>
                         {% endif %}
                     </div>
 
                     <div class="col-md-6">
-                        <p class="text-right">Price: <b>{{ totalPrice|number_format(2, '.', ',') }}</b> {{ store.currency }}</p>
+                        <p class="text-right">Price: <b>{{ totalPrice|number_format(2, '.', ',') }}</b> {{
+                            store.currency }}</p>
                     </div>
                 </div>
 
@@ -71,8 +76,12 @@
                 {% if store.enable_discount %}
                 <form method="post" action="/checkout/coupons/add">
                     <div class="input-group">
-                        <input type="text" name="coupon" placeholder="Have a coupon code? Enter it here and click redeem." class="form-control">
-                        <div class="input-group-btn"><button class="btn btn-primary">Redeem <i class="fa fa-arrow-right"></i></button></div>
+                        <input type="text" name="coupon"
+                               placeholder="{{ language.redeemPlaceholder }}" class="form-control">
+                        <div class="input-group-btn">
+                            <button class="btn btn-primary">{{ language.redeem }} <i class="fa fa-arrow-right"></i>
+                            </button>
+                        </div>
                     </div>
                 </form>
                 {% endif %}
@@ -87,7 +96,8 @@
                 <div class="col-md-6">
                     <div class="col-md-12">
                         {% if mcName == null %}
-                        <input name="mc_name" placeholder="{{ language.minecraft_name_placeholder }}" class="form-control" type="text" required>
+                        <input name="mc_name" placeholder="{{ language.minecraft_name_placeholder }}"
+                               class="form-control" type="text" required>
                         {% else %}
                         <input title="{{ mcName }}" value="{{ mcName }}" class="form-control" type="text" disabled>
                         <a href="/checkout/basket/forget">{{ language.change_minecraft_name }}</a>
@@ -95,20 +105,18 @@
                     </div>
 
                     <div class="col-md-12">
-                        <br/><input name="email" placeholder="{{ language.email }}" class="form-control" type="text" required>
+                        <br/><input name="email" placeholder="{{ language.email }}" class="form-control" type="text"
+                                    required>
                     </div>
                 </div>
 
                 <div class="col-md-6">
-
                     <div class="gateways">
-
                         {% if totalPrice > 0 %}
-
                         {% if store.enable_paypal %}
                         <div class="radio">
                             <label>
-                                <input type="radio" name="gateway" id="gateway" value="paypal" required>
+                                <input type="radio" name="gateway" value="paypal" required>
                                 <span class="btn btn-info btn-block">{{ language.paypal }}</span>
                             </label>
                         </div>
@@ -117,7 +125,7 @@
                         {% if store.enable_paygol %}
                         <div class="radio">
                             <label>
-                                <input type="radio" name="gateway" id="gateway" value="paygol" required>
+                                <input type="radio" name="gateway" value="paygol" required>
                                 <span class="btn btn-danger btn-block">{{ language.paygol }}</span>
                             </label>
                         </div>
@@ -126,7 +134,7 @@
                         {% if store.enable_paymentwall %}
                         <div class="radio">
                             <label>
-                                <input type="radio" name="gateway" id="gateway" value="paymentwall" required>
+                                <input type="radio" name="gateway" value="paymentwall" required>
                                 <span class="btn btn-warning btn-block">{{ language.paymentwall }}</span>
                             </label>
                         </div>
@@ -135,7 +143,7 @@
                         {% if store.enable_xsolla %}
                         <div class="radio">
                             <label>
-                                <input type="radio" name="gateway" id="gateway" value="xsolla" required>
+                                <input type="radio" name="gateway" value="xsolla" required>
                                 <span class="btn btn-primary btn-block">{{ language.xsolla }}</span>
                             </label>
                         </div>
@@ -144,7 +152,7 @@
                         {% if store.enable_stripe %}
                         <div class="radio">
                             <label>
-                                <input type="radio" name="gateway" id="gateway" value="stripe" required>
+                                <input type="radio" name="gateway" value="stripe" required>
                                 <span class="btn btn-info btn-block">{{ language.stripe }}</span>
                             </label>
                         </div>
@@ -153,8 +161,8 @@
                         {% if store.enable_mollie is defined and store.enable_mollie %}
                         <div class="radio">
                             <label>
-                                <input type="radio" name="gateway" id="gateway" value="mollie" required>
-                                <span class="btn btn-danger btn-block">Mollie</span>
+                                <input type="radio" name="gateway" value="mollie" required>
+                                <span class="btn btn-danger btn-block">{{ language.mollie }}</span>
                             </label>
                         </div>
                         {% endif %}
@@ -163,7 +171,7 @@
                         {% if basketItems|length > 0 %}
                         <div class="radio">
                             <label>
-                                <input type="radio" name="gateway" id="gateway" value="free" required>
+                                <input type="radio" name="gateway" value="free" required>
                                 <span class="btn btn-warning btn-block">{{ language.free }}</span>
                             </label>
                         </div>
@@ -177,13 +185,61 @@
                 <hr>
             </div>
 
+            {% if store.requireBillingDetails %}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group focused">
+                        <label for="billingFirstName">{{ language.billingFirstName }}</label>
+                        <input id="billingFirstName" class="form-control" name="billingFirstName" required="">
+                    </div>
+                    <div class="form-group focused">
+                        <label for="billingLastName">{{ language.billingLastName }}</label>
+                        <input id="billingLastName" class="form-control" name="billingLastName" required="">
+                    </div>
+                    <div class="form-group">
+                        <label for="billingAddressOne">{{ language.billingAddressLineOne }}</label>
+                        <input id="billingAddressOne" class="form-control" name="billingAddressLineOne"
+                               required="">
+                    </div>
+                    <div class="form-group">
+                        <label for="billingAddressTwo">{{ language.billingAddressLineTwo }}</label>
+                        <input id="billingAddressTwo" class="form-control" name="billingAddressLineTwo">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group focused">
+                        <label for="billingCity">{{ language.billingCity }}</label>
+                        <input id="billingCity" class="form-control" name="billingCity" required="">
+                    </div>
+                    <div class="form-group focused">
+                        <label for="billingState">{{ language.billingState }}</label>
+                        <input id="billingState" class="form-control" name="billingState" required="">
+                    </div>
+                    <div class="form-group focused">
+                        <label for="billingZip">{{ language.billingZipCode }}</label>
+                        <input id="billingZip" class="form-control" name="billingZipCode" required="">
+                    </div>
+                    <div class="form-group">
+                        <label for="billingCountry">{{ language.billingCountry }}</label>
+                        <select class="form-control" id="billingCountry" required="">
+                            <option value=""></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
             <div class="row">
                 <div class="col-md-12">
-                    <input name="tos" type="checkbox" required> {{ language.agree }} <a href="/terms" target="_blank">{{ language.terms_of_service }}</a>
+                    <input name="tos" type="checkbox" required> {{ language.agree }} <a href="/terms" target="_blank">{{
+                    language.terms_of_service }}</a>
                 </div>
                 <div class="col-md-12">
                     <hr>
-                    <input name="tos_cs" type="checkbox" required> I agree with the <a href="https://www.craftingstore.net/terms" target="_blank">CraftingStore Terms Of Service</a> and allow CraftingStore to process my data in this way, and herby confirm that I'm over the age of 18, or have permission from my guardian.
+                    <input name="tos_cs" type="checkbox" required> I agree with the <a
+                        href="https://www.craftingstore.net/terms" target="_blank">CraftingStore Terms Of Service</a>
+                    and allow CraftingStore to process my data in this way, and herby confirm that I'm over the age of
+                    18, or have permission from my guardian.
                 </div>
                 <div class="col-md-12 text-right">
                     <hr>
