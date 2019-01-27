@@ -22,8 +22,7 @@
                     <tr>
                         <td class="name">{{ package.name }}</td>
                         <td class="price">
-                            {% if package.priceCalculatedOriginal == package.priceCalculatedDiscounted
-                            %}
+                            {% if package.priceCalculatedOriginal == package.priceCalculatedDiscounted %}
                             {{ package.priceCalculatedOriginal|number_format(2, '.', ',') }}
                             {% else %}
                             <del>{{ package.priceCalculatedOriginal|number_format(2, '.', ',') }}</del>
@@ -32,7 +31,8 @@
                             <small>{{ store.currency }}</small>
                         </td>
                         <td class="pull-right">
-                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#package{{ package.id }}">
+                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal"
+                                    data-target="#package{{ package.id }}">
                                 {{ language.more_info }}
                             </button>
                         </td>
@@ -43,9 +43,10 @@
 
                 {% else %}
 
+                {% for row in packages|batch(3) %}
                 <div class="row">
-                    {% for package in packages %}
-                    <div class="col-lg-4 col-md-4 col-xs-6">
+                    {% for package in row %}
+                    <div class="col-md-4">
                         <div class="panel panel-default item-wrapper">
                             <div class="panel-body">
                                 {% if package.picture != null %}
@@ -54,8 +55,7 @@
                                 <div class="item-footer">
                                     <div class="row">
                                         <div class="col-md-6"><b>{{ package.name }}</b><br>
-                                            {% if package.priceCalculatedOriginal == package.priceCalculatedDiscounted
-                                            %}
+                                            {% if package.priceCalculatedOriginal == package.priceCalculatedDiscounted %}
                                             {{ package.priceCalculatedOriginal|number_format(2, '.', ',') }}
                                             {% else %}
                                             <del>{{ package.priceCalculatedOriginal|number_format(2, '.', ',') }}</del>
@@ -77,8 +77,9 @@
                     </div>
                     {% endfor %}
                 </div>
-                {% endif %}
+                {% endfor %}
             </div>
+            {% endif %}
 
             {% if modules|length > 0 %}
             <div class="col-md-3">
