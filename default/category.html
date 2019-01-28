@@ -99,6 +99,14 @@
                 {% if module.type == "donationGoal" %}
                 {% include module.donationgoal with {'module': module} %}
                 {% endif %}
+
+                {% if module.type == "giftCard" %}
+                {% include module.giftcard with {'module': module} %}
+                {% endif %}
+
+                {% if module.type == "serverStatus" %}
+                {% include module.serverstatus with {'module': module} %}
+                {% endif %}
                 {% endfor %}
             </div>
             {% endif %}
