@@ -23,10 +23,10 @@
                         <td>{{ basketItem.name }}</td>
                         <td>
                             {% if basketItem.price == basketItem.originalPrice %}
-                            {{ basketItem.price|number_format(2, '.', ',') }}
+                                {{ basketItem.price|number_format(2, '.', ',') }}
                             {% else %}
-                            <del>{{ basketItem.originalPrice|number_format(2, '.', ',') }}</del>
-                            {{ basketItem.price|number_format(2, '.', ',') }}
+                                <del>{{ basketItem.originalPrice|number_format(2, '.', ',') }}</del>
+                                {{ basketItem.price|number_format(2, '.', ',') }}
                             {% endif %}
 
                             {{ store.currency }}

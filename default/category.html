@@ -84,29 +84,33 @@
             {% if modules|length > 0 %}
             <div class="col-md-3">
                 {% for module in modules %}
-                {% if module.type == "recentPayments" %}
-                {% include module.payments with {'module': module} %}
-                {% endif %}
+                    {% if module.type == "recentPayments" %}
+                        {% include module.payments with {'module': module} %}
+                    {% endif %}
 
-                {% if module.type == "topDonator" %}
-                {% include module.topdonator with {'module': module} %}
-                {% endif %}
+                    {% if module.type == "topDonator" %}
+                        {% include module.topdonator with {'module': module} %}
+                    {% endif %}
 
-                {% if module.type == "ownText" %}
-                {% include module.owntext with {'module': module} %}
-                {% endif %}
+                    {% if module.type == "ownText" %}
+                        {% include module.owntext with {'module': module} %}
+                    {% endif %}
 
-                {% if module.type == "donationGoal" %}
-                {% include module.donationgoal with {'module': module} %}
-                {% endif %}
+                    {% if module.type == "discordWidget" %}
+                        {% include module.owntext with {'module': module} %}
+                    {% endif %}
 
-                {% if module.type == "giftCard" %}
-                {% include module.giftcard with {'module': module} %}
-                {% endif %}
+                    {% if module.type == "donationGoal" %}
+                        {% include module.donationgoal with {'module': module} %}
+                    {% endif %}
 
-                {% if module.type == "serverStatus" %}
-                {% include module.serverstatus with {'module': module} %}
-                {% endif %}
+                    {% if module.type == "giftCard" %}
+                        {% include module.giftcard with {'module': module} %}
+                    {% endif %}
+
+                    {% if module.type == "serverStatus" %}
+                        {% include module.serverstatus with {'module': module} %}
+                    {% endif %}
                 {% endfor %}
             </div>
             {% endif %}
