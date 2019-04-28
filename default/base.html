@@ -41,12 +41,10 @@
     <div class="row">
         <div class="col-lg-12 col-xs-12">
 
-            {% if errors|length > 0 %}
+            {% if error is not null %}
             <div class="alert alert-warning">
                 <ul>
-                    {% for error in errors.all() %}
                     <li>{{ error | raw }}</li>
-                    {% endfor %}
                 </ul>
             </div>
             {% endif %}
