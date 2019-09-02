@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-12">
                 {% if authenticationMethod == 'minecraft' %}
-                <form method="POST" action="/login{{ categoryToRedirect == null ? '' : '/' . categoryToRedirect }}" accept-charset="UTF-8">
+                <form method="POST" action="/login{{ categoryToRedirect }}" accept-charset="UTF-8">
                     {% if mcName == null %}
                     <input name="mc_name" placeholder="{{ language.minecraft_name_placeholder }}" class="form-control" type="text">
                     {% else %}
