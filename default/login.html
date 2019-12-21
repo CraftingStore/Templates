@@ -8,7 +8,7 @@
                 {% if authenticationMethod == 'minecraft' %}
                 <form method="POST" action="/login{{ categoryToRedirect }}" accept-charset="UTF-8">
                     {% if mcName == null %}
-                    <input name="mc_name" placeholder="{{ language.minecraft_name_placeholder }}" class="form-control" type="text">
+                    <input name="mc_name" placeholder="{{ language.minecraft_name_placeholder }}" class="form-control" type="text" required="">
                     {% else %}
                     <input title="{{ mcName }}" value="{{ mcName }}" class="form-control" type="text" disabled>
                     <a href="/checkout/basket/forget">{{ language.change_minecraft_name }}</a>
