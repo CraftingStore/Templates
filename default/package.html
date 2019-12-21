@@ -11,7 +11,7 @@
                     {{ package.priceCalculatedOriginal|number_format(2, '.', ',') }}
                 {% else %}
                     <del>{{ package.priceCalculatedOriginal|number_format(2, '.', ',') }}</del> {{ package.priceCalculatedDiscounted|number_format(2, '.', ',') }}
-                {% endif %} {{ currency }}
+                {% endif %} {{ store.currency }}
                 <hr>
                 {{ package.description | raw }}
             </div>
