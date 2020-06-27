@@ -166,6 +166,24 @@
                             </label>
                         </div>
                         {% endif %}
+                        
+                        {% if store.enable_onebip is defined and store.enable_onebip %}
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="gateway" value="onebip" required>
+                                <span class="btn btn-info btn-block">{{ language.onebip }}</span>
+                            </label>
+                        </div>
+                        {% endif %}
+
+                        {% if store.enable_manual is defined and store.enable_manual %}
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="gateway" value="manual" required>
+                                <span class="btn btn-info btn-block">{{ language.manual }}</span>
+                            </label>
+                        </div>
+                        {% endif %}
 
                         {% else %}
                         {% if basketItems|length > 0 %}
