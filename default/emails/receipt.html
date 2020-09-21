@@ -18,3 +18,10 @@ If you do not receive any items within the next 10-15 minutes, please contact a 
 You can use the command below to get your roles on the server's Discord. Just execute the command into the correct channel, and you will get your roles<br/><br/>
 <b>{{ discordPendingCommand }}</b>
 {% endif %}
+
+{% if hasGiftCards %}
+<br/>
+<b>Your gift-card(s)</b><br/>
+The package(s) you bought include gift-cards that you can use on the store, you can find the codes below.<br/><br/>
+{{ giftcards }}
+{% endif %}
