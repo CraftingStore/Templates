@@ -21,17 +21,11 @@
                     {% for basketItem in basketItems %}
                     <tr>
                         <td>{{ basketItem.name }}</td>
-                        <td>
-                            {% if basketItem.price == basketItem.originalPrice %}
-                                {{ basketItem.price|number_format(2, '.', ',') }}
-                            {% else %}
-                                <del>{{ basketItem.originalPrice|number_format(2, '.', ',') }}</del>
-                                {{ basketItem.price|number_format(2, '.', ',') }}
-                            {% endif %}
-
-                            {{ store.currency }}
-                        </td>
+                        <td>{{ basketItem.price }} {{ store.currency }}</td>
                         <td class="quantity">
+                            {% if disableQuantity %}
+                            1
+                            {% else %}
                             <form method="post" action="/checkout/basket/quantity">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -43,9 +37,17 @@
                                     </div>
                                 </div>
                             </form>
+                            {% endif %}
                         </td>
                         <td>
-                            {{ (basketItem.price*basketItem.quantity)|number_format(2, '.', ',') }} {{ store.currency }}
+                            {% if basketItem.subTotal == basketItem.originalSubTotal %}
+                                {{ basketItem.originalSubTotal|number_format(2, '.', ',') }}
+                            {% else %}
+                                <del>{{ basketItem.originalSubTotal|number_format(2, '.', ',') }}</del>
+                                {{ basketItem.subTotal|number_format(2, '.', ',') }}
+                            {% endif %}
+                            
+                            {{ store.currency }}
                         </td>
                         <td class="text-right">
                             <a href="/checkout/basket/remove/{{  basketItem.identifier }}"
@@ -255,7 +257,7 @@
                 <div class="col-md-12">
                     <hr>
                     <input name="tos_cs" type="checkbox" required> I agree with the <a
-                        href="https://www.craftingstore.net/terms" target="_blank">CraftingStore Terms Of Service</a>
+                        href="https://craftingstore.net/terms" target="_blank">CraftingStore Terms Of Service</a>
                     and allow CraftingStore to process my data in this way, and herby confirm that I'm over the age of
                     18, or have permission from my guardian.
                 </div>
