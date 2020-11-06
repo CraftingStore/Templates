@@ -8,7 +8,7 @@
 						<img src="{{ module.data.avatarUrl }}" class="img-circle">
 					{% else %}
 						<img src="https://crafatar.com/avatars/{{ module.data.uuid }}/?size=100" class="img-circle">
-					{% endif %}
+					{% endif %}</br>
 					<b>{{ module.data.mc_name }}</b><br>
 					{% if module.data.show_amount_spend == 1 %}
 						{{ module.data.total|number_format(2, '.', ',') }}
