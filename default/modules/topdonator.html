@@ -1,20 +1,21 @@
 <div class="panel panel-default">
-		<div class="panel-heading">{{ module.header }}</div>
-    <div class="panel-body">
-      <div class="row">
-          <div class="col-md-12">
-              <div class="text-center">
-                {% if module.data.uuid is null %}
-                    <img src="https://cravatar.eu/helmavatar/8667ba71-b85a-4004-af54-457a9734eed7/100.png" class="img-circle"><br>
-                {% else %}
-                    <img src="https://cravatar.eu/helmavatar/{{ module.data.uuid }}/100.png" class="img-circle"><br>
-                {% endif %}
-                    <b>{{ module.data.mc_name }}</b><br>
-                    {% if module.data.show_amount_spend == 1 %}
-                    {{ module.data.total|number_format(2, '.', ',') }} {{ store.currency }}
-                {% endif %}
-              </div>
-          </div>
-      </div>
-    </div>
+	<div class="panel-heading">{{ module.header }}</div>
+	<div class="panel-body">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="text-center">
+					{% if module.data.avatarUrl is defined %}
+						<img src="{{ module.data.avatarUrl }}" class="img-circle">
+					{% else %}
+						<img src="https://crafatar.com/avatars/{{ module.data.uuid }}/?size=100" class="img-circle">
+					{% endif %}
+					<b>{{ module.data.mc_name }}</b><br>
+					{% if module.data.show_amount_spend == 1 %}
+						{{ module.data.total|number_format(2, '.', ',') }}
+						{{ store.currency }}
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
