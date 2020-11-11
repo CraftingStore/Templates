@@ -106,6 +106,19 @@
                         {% endif %}
                     </div>
 
+                    <!-- Discord -->
+                    {% if discord.require %}
+                    <div class="col-md-12">
+                        {% if discord.name is not null %}
+                            <br/><input name="discordName" placeholder="{{ language.discordAccount }} {{ discord.name }}" class="form-control" type="text" disabled>
+                            <a href="/auth/discord/login">{{ language.discordAccountChange }}</a>
+                        {% else %}
+                            <br/><input name="discordName" placeholder="{{ language.discordAccount }} {{ language.discordAccountNotLoggedIn }}" class="form-control" type="text" disabled>
+                            <a href="/auth/discord/login">{{ language.discordAccountLogin }}</a>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+
                     <div class="col-md-12">
                         <br/><input name="email" placeholder="{{ language.email }}" class="form-control" type="text"
                                     required>
@@ -263,7 +276,11 @@
                 </div>
                 <div class="col-md-12 text-right">
                     <hr>
-                    <button type="submit" class="btn btn-primary">{{ language.checkout }}</button>
+                    {% if hasPaymentMethods %}
+                        <button type="submit" class="btn btn-primary">{{ language.checkout }}</button>
+                    {% else %}
+                        No payment methods are configured, plesae configure some from [ Payments -> Gateways ].
+                    {% endif %}
                 </div>
             </div>
         </form>
