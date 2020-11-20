@@ -10,7 +10,7 @@
 						</a>
 					{% endif %}
 					<b>{{ module.data.package.name }}</b><br>
-					<span>{{ module.data.package.price }}
+					<span>{{ module.data.package.price|raw }}
 						{{ store.currency }}</span>
                     <hr>
                     <a href="{{ module.data.package.url }}" class="btn btn-primary btn-sm">{{ language.buy_now }}</a>
