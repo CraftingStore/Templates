@@ -276,7 +276,9 @@
                 </div>
                 <div class="col-md-12 text-right">
                     <hr>
-                    {% if hasPaymentMethods %}
+                    {% if checkout.disable %}
+                        {{ checkout.message }}
+                    {% elseif hasPaymentMethods %}
                         <button type="submit" class="btn btn-primary">{{ language.checkout }}</button>
                     {% else %}
                         No payment methods are configured, plesae configure some from [ Payments -> Gateways ].
