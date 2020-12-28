@@ -199,7 +199,25 @@
                             </label>
                         </div>
                         {% endif %}
+                        
+                        {% if store.enable_pagseguro is defined and store.enable_pagseguro %}
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="gateway" value="pagseguro" required>
+                                <span class="btn btn-success btn-block">{{ language.pagseguro }}</span>
+                            </label>
+                        </div>
+                        {% endif %}
 
+                        {% for customGateway in customGateways %}
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="gateway" value="{{ customGateway.projectKey }}" required>
+                                    <span class="btn btn-primary btn-block">{{ customGateway.name }}</span>
+                                </label>
+                            </div>
+                        {% endfor %}
+                        
                         {% else %}
                         {% if basketItems|length > 0 %}
                         <div class="radio">
