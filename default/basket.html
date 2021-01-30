@@ -21,9 +21,9 @@
                     {% for basketItem in basketItems %}
                     <tr>
                         <td>{{ basketItem.name }}</td>
-                        <td>{{ basketItem.price|number_format(2, '.', ',') }} {{ store.currency }}</td>
+                        <td>{{ basketItem.price|number_format(2, '.', ',') }} {{ store.currency }}{{ basketItem.subscription ? language.month : '' }}</td>
                         <td class="quantity">
-                            {% if disableQuantity %}
+                            {% if basketItem.disableQuantity or isSubscriptionPayment %}
                             1
                             {% else %}
                             <form method="post" action="/checkout/basket/quantity">
@@ -228,7 +228,7 @@
                         {% endfor %}
                         
                         {% else %}
-                        {% if basketItems|length > 0 %}
+                        {% if basketItems|length > 0 and (store.enable_free is defined and store.enable_free) %}
                         <div class="radio">
                             <label>
                                 <input type="radio" name="gateway" value="free" required>
@@ -305,7 +305,7 @@
                     {% elseif hasPaymentMethods %}
                         <button type="submit" class="btn btn-primary">{{ language.checkout }}</button>
                     {% else %}
-                        No payment methods are configured, plesae configure some from [ Payments -> Gateways ].
+                        No payment methods are configured, please configure some from [ Payments -> Gateways ].
                     {% endif %}
                 </div>
             </div>
