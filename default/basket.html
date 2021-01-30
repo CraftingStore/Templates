@@ -23,7 +23,7 @@
                         <td>{{ basketItem.name }}</td>
                         <td>{{ basketItem.price|number_format(2, '.', ',') }} {{ store.currency }}{{ basketItem.subscription ? language.month : '' }}</td>
                         <td class="quantity">
-                            {% if disableQuantity %}
+                            {% if basketItem.disableQuantity %}
                             1
                             {% else %}
                             <form method="post" action="/checkout/basket/quantity">
