@@ -130,6 +130,11 @@
                     <a href="/package/{{ package.id }}">
                         <button type="button" class="btn btn-primary">{{ language.buy_now }}</button>
                     </a>
+                    {% if package.subscriptionEnabled %}
+                        <a href="/package/{{ package.id }}?subscription">
+                            <button type="button" class="btn btn-primary">{{ language.subscribe }}</button>
+                        </a>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>
