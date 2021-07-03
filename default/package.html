@@ -18,32 +18,47 @@
             <div class="col-md-5">
                 <form method="POST" action="/checkout/{{ package.id }}{{ isSubscription ? '?subscription' : '' }}" accept-charset="UTF-8">
                     <div class="col-md-12">
-                        {% if mcName == null %}
-                        <input name="mc_name" placeholder="{{ language.minecraft_name_placeholder }}"
-                               class="form-control" type="text" required="">
-                        {% else %}
-                        <input title="{{ mcName }}" value="{{ mcName }}" class="form-control" type="text"
-                               disabled>
-                        <a href="/checkout/basket/forget">{{ language.change_minecraft_name }}</a>
-                        {% endif %}
+                        <div class="form-group">
+                            {% if mcName == null %}
+                            <input name="mc_name" placeholder="{{ language.minecraft_name_placeholder }}"
+                                   class="form-control" type="text" required="">
+                            {% else %}
+                            <input title="{{ mcName }}" value="{{ mcName }}" class="form-control" type="text"
+                                   disabled>
+                            <a href="/checkout/basket/forget">{{ language.change_minecraft_name }}</a>
+                            {% endif %}
+                        </div>
                     </div>
                     {% if package.own_price %}
                     <div class="col-md-12">
-                        <br><input type="text" name="price" placeholder="{{ language.ownPrice }}"
-                                   class="form-control" required="">
+                        <div class="form-group">
+                            <input type="text" name="price" placeholder="{{ language.ownPrice }}" class="form-control" required="">
+                        </div>
                     </div>
                     {% endif %}
 
                     {% if package.variables|length > 0 %}
+                        {% for variable in package.variables %}
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>{{ variable.name }}</label>
+                                <input type="text" name="variables[{{ variable.identifier }}]" placeholder="{{ variable.help_text }}" class="form-control" required>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
 
-                    {% for variable in package.variables %}
-                    <div class="col-md-12"><br/>
-                        <b>{{ variable.name }}</b>
-                        <br><input type="text" name="variables[{{ variable.identifier }}]"
-                                   placeholder="{{ variable.help_text }}" class="form-control" required>
-                    </div>
-                    {% endfor %}
-
+                    {% if package.userSelectsExecutingServer %}
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="userSelectsExecutingServer">{{ language.userSelectsExecutingServer }}</label>
+                                <select class="form-control" id="userSelectsExecutingServer" name="userSelectsExecutingServer">
+                                    {% for serverId, server in userSelectableServers %}
+                                        <option value="{{ serverId }}">{{ server }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
                     {% endif %}
 
                     <div class="col-md-12">
