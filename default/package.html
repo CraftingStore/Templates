@@ -42,7 +42,35 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>{{ variable.name }}</label>
-                                <input type="text" name="variables[{{ variable.identifier }}]" placeholder="{{ variable.help_text }}" class="form-control" required>
+                                {# Type: Text #}
+                                {% if variable.type is same as(1) %}
+                                    <input type="text" name="variables[{{ variable.identifier }}]" placeholder="{{ variable.help_text }}" {% if variable.min is not null %} minlength="{{ variable.min }}" {% endif %} {% if variable.max is not null %} maxlength="{{ variable.max }}" {% endif %} class="form-control" required>
+
+                                {# Type: Dropdown #}
+                                {% elseif variable.type is same as(2) %}
+                                    <select name="variables[{{ variable.identifier }}]" class="form-control" required>
+                                        {% for option in variable.data %}
+                                            <option value="{{ loop.index0 }}">{{ option.name }}</option>
+                                        {% endfor %}
+                                    </select>
+
+                                {# Type: Alphabetic #}
+                                {% elseif variable.type is same as(3) %}
+                                    <input type="text" pattern="[a-zA-Z]+" name="variables[{{ variable.identifier }}]" placeholder="{{ variable.help_text }}" {% if variable.min is not null %} minlength="{{ variable.min }}" {% endif %} {% if variable.max is not null %} maxlength="{{ variable.max }}" {% endif %} class="form-control" required>
+
+                                {# Type: Numeric #}
+                                {% elseif variable.type is same as(4) %}
+                                    <input type="number" name="variables[{{ variable.identifier }}]" placeholder="{{ variable.help_text }}" class="form-control" {% if variable.min is not null %} min="{{ variable.min }}" {% endif %} {% if variable.max is not null %} max="{{ variable.max }}" {% endif %} required>
+
+                                {# Type: Alphanumeric #}
+                                {% elseif variable.type is same as(5) %}
+                                    <input type="text" pattern="[a-zA-Z0-9]+" name="variables[{{ variable.identifier }}]" placeholder="{{ variable.help_text }}" {% if variable.min is not null %} minlength="{{ variable.min }}" {% endif %} {% if variable.max is not null %} maxlength="{{ variable.max }}" {% endif %} class="form-control" required>
+
+                                {# Type: Email #}
+                                {% elseif variable.type is same as(6) %}
+                                    <input type="email" name="variables[{{ variable.identifier }}]" placeholder="{{ variable.help_text }}" {% if variable.min is not null %} minlength="{{ variable.min }}" {% endif %} {% if variable.max is not null %} maxlength="{{ variable.max }}" {% endif %} class="form-control" required>
+
+                                {% endif %}
                             </div>
                         </div>
                         {% endfor %}
