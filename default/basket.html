@@ -218,6 +218,15 @@
                         </div>
                         {% endif %}
                         
+                        {% if store.enable_coinbase is defined and store.enable_coinbase %}
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="gateway" value="coinbase" required>
+                                <span class="btn btn-primary btn-block">{{ language.coinbase }}</span>
+                            </label>
+                        </div>
+                        {% endif %}
+                        
                         {% for customGateway in customGateways %}
                             <div class="radio">
                                 <label>
