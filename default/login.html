@@ -16,6 +16,9 @@
                     <hr>
                     <button type="submit" name="type" value="checkout" class="btn btn-primary btn-block"><i  class="fa fa-shopping-cart"></i> {{ language.buy_now }}</button>
                 </form>
+                {% elseif authenticationMethod == 'discord' %}
+                    <p>{{ language.loginDiscord }}</p>
+                    <a class="btn btn-primary" href="{{ loginUrl }}">{{ language.loginDiscordButton }}</a>
                 {% else %}
                 <p>{{ language.loginSteam }}</p>
 
