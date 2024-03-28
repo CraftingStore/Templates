@@ -231,7 +231,7 @@
                             <div class="radio">
                                 <label>
                                     <input type="radio" name="gateway" value="{{ customGateway.projectKey }}" required>
-                                    <span class="btn btn-primary btn-block">{{ customGateway.name }}</span>
+                                    <span class="btn btn-{{ customGateway.buttonClass }} btn-block">{{ customGateway.name }}</span>
                                 </label>
                             </div>
                         {% endfor %}
